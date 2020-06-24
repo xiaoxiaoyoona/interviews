@@ -1,0 +1,27 @@
+Integer 的自动拆箱在[-128,127]是不会new新的对象的，直接引用常量池的对象
+
+==比较的是引用
+
+String str = new String(“hello”);
+ 名 称		 特 点					对 象						example
+栈(stack)	最快但是也很小			基本数据类型的变量，对象的引用，函数调用的现场保存	str
+堆(heap)	大量的对象都是放在堆空间	new 关键字和构造器创建的对象				new 创建出来的字符串
+静态存储区					字面量（literal）如直接书写的 100、“hello”和常量	"hello"
+
+构造器不能被继承，不能被重写，但可以被重载
+
+重写（override）:两同两小一大原则
+		方法名相同，参数相同
+		子类返回类型小于等于父类返回类型
+		子类抛出异常小于等于父类抛出异常
+		子类访问权限大于等于父类访问权限
+
+两个对象 hashCode相同，equals未必是true
+	equals是true,hashCode一定相同
+
+java编程语言只有值传递参数
+
+String						StringBuffer				StringBuilder
+引用的字符串是不可以更改的			表示的字符串对象是可以直接进行修改的	表示的字符串对象是可以直接进行修改的
+final修饰的，不可以被修改，继承，重写		被 synchronized 修饰,线程安全		在单线程环境下使用的
+
