@@ -25,3 +25,24 @@ String						StringBuffer				StringBuilder
 引用的字符串是不可以更改的			表示的字符串对象是可以直接进行修改的	表示的字符串对象是可以直接进行修改的
 final修饰的，不可以被修改，继承，重写		被 synchronized 修饰,线程安全		在单线程环境下使用的
 
+HashMap 底层实现原理是什么？
+HashMap的线程是不安全的
+存储结构有数组和链表
+数组：存储区间是连续的，占用内存严重，故空间复杂的很大，但时间复杂度很小；寻址容易，插入和删除困难
+链表：存储区间离散，占用内存比较宽松，故空间复杂度很小，但时间复杂度很大；寻址困难，插入和删除容易
+HashMap的put方法的原理：先判断一下要存储内容的key值是否为null
+			如果key为null，则执行putForNullKey方法，将内容存储到Entry[]数组的第一个位置
+			如果key不为null，计算key的hash值，对数组长度取模，得到要存储位置的下标
+					迭代该数组元素上的链表，看该链表上是否有hash值相同的
+						如果有hash值相同的，就直接覆盖value的值
+						如果没有hash值相同，就将该内容存储到链表的表头
+			当HashMap中存储的内容超过数组长度 *loadFactor时，数组就会进行扩容，默认的数组长度是16，loadFactor为加载因子，默认的值为0.75
+元素是按照什么样的规则存储到数组中？根据元素的key的哈希值对数组长度取模得到，hash(key.hashCode())%len
+HashMap里面实现一个静态内部类Entry，其重要的属性有 hash，key，value，next。
+hashcode相同，所以它们的bucket位置相同，‘碰撞’会发生。当两个 Entry 对象的 key 的 hashCode() 返回值相同时将由 key 通过 eqauls() 比较值决定是采用覆盖行为（返回 true），还是产生 Entry 链（返回 false）。
+JDK1.7 HashMap采用位桶+链表实现，即使用链表处理冲突，同一hash值的链表都存储在一个链表里。但是当位于一个桶中的元素较多，即hash值相等的元素较多时，通过key值依次查找的效率较低
+JDK1.8 HashMap采用位桶+链表+红黑树，当链表长度超过阈值（8）时，将链表转换为红黑树，这样大大减少了查找时间。
+如果两个键的hashcode相同，你如何获取值对象？
+	会使用键对象的hashcode找到bucket位置，然后获取值对象。如果有两个值对象储存在同一个bucket，将会遍历LinkedList直到找到值对象。
+	找到bucket位置之后，会调用keys.equals()方法去找到LinkedList中正确的节点，最终找到要找的值对象。
+
