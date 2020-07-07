@@ -84,4 +84,52 @@ finally 通常与 try-catch 块一起使用，即使 try-catch 块引发了异常，finally 块中的
 finalize() 是 Object 类的一个特殊方法，当对象正在被垃圾回收时，垃圾收集器将会调用该方法。可以重写该方法用于释放系统资源。
 static 块是由 Java ClassLoader 将类加载到内存中时执行的代码块。通常用于初始化类的静态变量或者创建静态资源。
 
+四种常见的系统架构
+	1.单体架构
+	2.分布式应用
+	3.微服务架构
+	4.Serverless架构
+
+SQL的优化及进阶
+	1.关键字大写，表名列名小写
+	2.巧用 CASE WHEN 进行统计（统计湖南和海南的人员数）
+		SELECT CASE pref_name
+			WHEN '长沙' THEN '湖南' 
+			WHEN '衡阳' THEN '湖南'
+		        WHEN '海口' THEN '海南' 
+			WHEN '三亚' THEN '海南'
+			ELSE '其他' END AS cityName,
+			SUM(population) 
+			FROM PopTbl
+			GROUP BY cityName;
+
+			UPDATE city_population
+			SET POPULATION = CASE
+			WHEN POPULATION >= 100 THEN
+				POPULATION * 0.9
+			WHEN POPULATION < 100 THEN
+				POPULATION * 1.2
+			ELSE
+				POPULATION
+			END;
+	3.参数是子查询时，使用 EXISTS 代替 IN(exists 可以`用到索引;只要查到一行数据满足条件就会终止查询)
+		如果 IN 后面如果跟着的是子查询，由于 SQL 会先执行 IN 后面的子查询，会将子查询的结果保存在
+		一张临时的工作表里（内联视图），然后扫描整个视图，显然扫描整个视图这个工作很多时候是非常耗时的，
+		而用 EXISTS 不会生成临时表。
+	4.避免排序
+		1)使用 EXISTS 代表 DISTINCT
+		2)使用集合运算符的 ALL 可选项
+	5.使用 MAX/ MIN 都会对进行排序，如果参数字段上没加索引会导致全表扫描，如果建有索引，则只需要扫描索引即可
+	6.能写在 WHERE 子句里的条件不要写在 HAVING 子句里(先GROUP BY再 HAVING；先WHERE 再GROUP BY )
+		使用 GROUP BY 子句进行聚合时会进行排序，如果事先通过 WHERE 子句能筛选出一部分行，能减轻排序的负担
+	7.在 GROUP BY 子句和 ORDER BY 子句中使用索引
+		GROUP BY 子句和 ORDER BY 子句一般都会进行排序，如果指定带有索引的列作为这两者的参数列，由于用到了索引，可以实现高速查询，由于索引是有序的，排序本身都会被省略掉
+	8.使用索引时，条件表达式的左侧应该是原始字段
+	9.尽量避免使用否定形式
+		会导致全表扫描
+	10.进行默认的类型转换
+		
+
+	
+
 
