@@ -15,6 +15,7 @@ String str = new String(¡°hello¡±);
 		×ÓÀà·µ»ØÀàÐÍÐ¡ÓÚµÈÓÚ¸¸Àà·µ»ØÀàÐÍ
 		×ÓÀàÅ×³öÒì³£Ð¡ÓÚµÈÓÚ¸¸ÀàÅ×³öÒì³£
 		×ÓÀà·ÃÎÊÈ¨ÏÞ´óÓÚµÈÓÚ¸¸Àà·ÃÎÊÈ¨ÏÞ
+ÖØÔØ£¨Overload£©£ºÖØÔØµÄÁ½¸ö·½·¨ÃûÏàÍ¬£¬µ«·½·¨²ÎÊýµÄ¸öÊý²»Í¬
 
 Á½¸ö¶ÔÏó hashCodeÏàÍ¬£¬equalsÎ´±ØÊÇtrue
 	equalsÊÇtrue,hashCodeÒ»¶¨ÏàÍ¬
@@ -45,4 +46,42 @@ JDK1.8 HashMap²ÉÓÃÎ»Í°+Á´±í+ºìºÚÊ÷£¬µ±Á´±í³¤¶È³¬¹ýãÐÖµ£¨8£©Ê±£¬½«Á´±í×ª»»ÎªºìºÚÊ
 Èç¹ûÁ½¸ö¼üµÄhashcodeÏàÍ¬£¬ÄãÈçºÎ»ñÈ¡Öµ¶ÔÏó£¿
 	»áÊ¹ÓÃ¼ü¶ÔÏóµÄhashcodeÕÒµ½bucketÎ»ÖÃ£¬È»ºó»ñÈ¡Öµ¶ÔÏó¡£Èç¹ûÓÐÁ½¸öÖµ¶ÔÏó´¢´æÔÚÍ¬Ò»¸öbucket£¬½«»á±éÀúLinkedListÖ±µ½ÕÒµ½Öµ¶ÔÏó¡£
 	ÕÒµ½bucketÎ»ÖÃÖ®ºó£¬»áµ÷ÓÃkeys.equals()·½·¨È¥ÕÒµ½LinkedListÖÐÕýÈ·µÄ½Úµã£¬×îÖÕÕÒµ½ÒªÕÒµÄÖµ¶ÔÏó¡£
+
+HashMapºÍHashTableµÄÇø±ð£¿
+	¶¼ÊÇ»ùÓÚ¹þÏ£±íÊµÏÖµÄ£»ÄÚ²¿Ã¿¸öÔªËØ¶¼ÊÇ key-value ¼üÖµ¶Ô£»¶¼ÊµÏÖÁË Map¡¢Cloneable¡¢Serializable ½Ó¿Ú
+	HashMap ¼Ì³ÐÁË AbstractMap Àà£¬¶ø HashTable ¼Ì³ÐÁË Dictionary Àà
+	HashMap ÔÊÐí¿ÕµÄ key ºÍ value Öµ£¬HashTable ²»ÔÊÐí¿ÕµÄ key ºÍ value Öµ¡£
+	HashMap ²»ÊÇÏß³Ì°²È«µÄ£¬¶ø HashTable ±¾Éí¾ÍÊÇÏß³Ì°²È«µÄÈÝÆ÷¡£
+	HashMap ½øÐÐ put »òÕß get ²Ù×÷£¬¿ÉÒÔ´ïµ½³£ÊýÊ±¼äµÄÐÔÄÜ£»¶ø HashTable µÄ put ºÍ get ²Ù×÷¶¼ÊÇ¼ÓÁË synchronized ËøµÄ£¬ËùÒÔÐ§ÂÊºÜ²î¡£
+	HashTable µÄ³õÊ¼³¤¶ÈÊÇ11£¬Ö®ºóÃ¿´ÎÀ©³äÈÝÁ¿±äÎªÖ®Ç°µÄ 2n+1£¨nÎªÉÏÒ»´ÎµÄ³¤¶È£©;HashMap µÄ³õÊ¼³¤¶ÈÎª16£¬Ö®ºóÃ¿´ÎÀ©³ä±äÎªÔ­À´µÄÁ½±¶¡£Èç¹û¸ø¶¨ÁËÈÝÁ¿³õÊ¼Öµ£¬ÄÇÃ´HashTable »áÖ±½ÓÊ¹ÓÃÄã¸ø¶¨µÄ´óÐ¡£¬¶ø HashMap »á½«ÆäÀ©³äÎª2µÄÃÝ´Î·½´óÐ¡¡£
+HashMapºÍHashSetµÄÇø±ð
+	HashSet ¼Ì³ÐÓÚ AbstractSet ½Ó¿Ú£¬ÊµÏÖÁË Set¡¢Cloneable,¡¢java.io.Serializable ½Ó¿Ú
+	HashSet ²»ÔÊÐí¼¯ºÏÖÐ³öÏÖÖØ¸´µÄÖµ¡£HashSet µ×²ãÆäÊµ¾ÍÊÇ HashMap
+
+Àà¼ÓÔØÆ÷
+	1.Æô¶¯Àà¼ÓÔØÆ÷£¨Bootstrap Class-Loader£©£¬¼ÓÔØjre/lib°üÏÂµÄjarÎÄ¼þ
+	2.À©Õ¹Àà¼ÓÔØÆ÷£¨Extension or Ext Class-Loader£©£¬¼ÓÔØjre/lib/ext°üÏÂµÄjarÎÄ¼þ
+	3.Ó¦ÓÃÀà¼ÓÔØÆ÷£¨Application or App Clas-Loader£©£¬¸ù¾Ý³ÌÐòµÄÀàÂ·¾¶À´¼ÓÔØjavaÀà
+ÔËÐÐÊ±Êý¾ÝÇø
+	1.PC¼Ä´æÆ÷£¨PC Register£©Ò²½Ð³ÌÐò¼ÆÊýÆ÷£¬×÷ÓÃ£ºµ±Ç°Ïß³ÌËùÖ´ÐÐµÄ×Ö½ÚÂëµÄÐÅºÅÖ¸Ê¾Æ÷¡£
+	2.JVM Õ»£¨Java Virtual Machine Stack£©£¬ÊÇÏß³ÌË½ÓÐµÄ£¬Ã¿Ò»¸öJVMÏß³Ì¶¼ÓÐ×Ô¼ºµÄJVMÕ»£¬Õâ¸öÕ»ÓëÏß³ÌÍ¬Ê±´´½¨£¬ÉúÃüÖÜÆÚºÍÏß³ÌÏàÍ¬¡£
+	3.±¾µØ·½·¨Õ»£¨Native Method Stack£©£¬JVM ¿ÉÄÜ»áÊ¹ÓÃµ½´«Í³µÄÕ»À´Ö§³Ö Native ·½·¨£¨Ê¹ÓÃ Java ÓïÑÔÒÔÍâµÄÆäËüÓïÑÔ£ÛCÓïÑÔ£Ý±àÐ´µÄ·½·¨£©µÄÖ´ÐÐ¡£
+	4.¶Ñ£¨Heap£©£¬¶ÑÊÇ¿É¹©¸÷ÌõÏß³Ì¹²ÏíµÄÔËÐÐÊ±ÄÚ´æÇøÓò£¬Ò²ÊÇ¹©ËùÓÐÀàÊµÀýºÍÊý¾Ý¶ÔÏó·ÖÅäÄÚ´æµÄÇøÓò¡£
+	5.·½·¨Çø£¨Method area£©£¬ÔÚ JVM ÖÐ£¬±»¼ÓÔØÀàÐÍµÄÐÅÏ¢¶¼±£´æÔÚ·½·¨ÇøÖÐ¡£°üÀ¨ÀàÐÍÐÅÏ¢ºÍ·½·¨ÁÐ±í¡£·½·¨ÇøÊÇÏß³Ì¹²ÏíµÄ£¬ËùÒÔ·ÃÎÊ·½·¨ÇøÐÅÏ¢µÄ·½·¨±ØÐëÊÇÏß³Ì°²È«µÄ
+	6.ÔËÐÐÊ±³£Á¿³Ø£¨Runtime Constant Pool£©£¬ÊÇÃ¿Ò»¸ö½Ó¿Ú»òÕßÀàµÄ³£Á¿³ØÔÚÔËÐÐÊ±µÄ±íÏÖÐÎÊ½£¬°üÀ¨±àÒëÆ÷¿ÉÖªµÄÊýÖµ×ÖÃæÁ¿ÒÔ¼°ÔËÐÐÆÚ½âÎöºó²ÅÄÜ»ñµÃµÄ·½·¨»ò×Ö¶ÎµÄÒýÓÃ
+	  ¼ò¶øÑÔÖ®£¬µ±Ò»¸ö·½·¨»òÕß±äÁ¿±»ÒýÓÃÊ±£¬JVM Í¨¹ýÔËÐÐÊ±³£Á¿ÇøÀ´²éÕÒ·½·¨»òÕß±äÁ¿ÔÚÄÚ´æÀïµÄÊµ¼ÊµØÖ·¡£
+Ö´ÐÐÒýÇæ
+	1.½âÊÍÆ÷ ¶ÁÈ¡×Ö½ÚÂëÁ÷£¬È»ºóÖ´ÐÐÖ¸Áî¡£ÒòÎªËüÒ»ÌõÒ»ÌõµØ½âÊÍºÍÖ´ÐÐÖ¸Áî£¬ËùÒÔËü¿ÉÒÔºÜ¿ìµØ½âÊÍ×Ö½ÚÂë£¬µ«ÊÇÖ´ÐÐÆðÀ´»á±È½ÏÂý¡£
+	2.¼´Ê±£¨Just-In-Time£¬JIT£©±àÒëÆ÷ ÃÖ²¹½âÊÍÆ÷µÄÈ±µã£¬Ê×ÏÈ°´ÕÕ½âÊÍÖ´ÐÐµÄ·½Ê½À´Ö´ÐÐ
+							    È»ºóÔÚºÏÊÊµÄÊ±ºò£¬¼´Ê±±àÒëÆ÷°ÑÕû¶Î×Ö½ÚÂë±àÒë³É±¾µØ´úÂë
+							    È»ºó£¬Ö´ÐÐÒýÇæ¾ÍÃ»ÓÐ±ØÒªÔÙÈ¥½âÊÍÖ´ÐÐ·½·¨ÁË£¬Ëü¿ÉÒÔÖ±½ÓÍ¨¹ý±¾µØ´úÂëÈ¥Ö´ÐÐ¡£
+							    Ö´ÐÐ±¾µØ´úÂë±ÈÒ»ÌõÒ»Ìõ½øÐÐ½âÊÍÖ´ÐÐµÄËÙ¶È¿ìºÜ¶à¡£
+
+JDK=JRE+¿ª·¢¹¤¾ß(javacºÍjava)
+JRE=JVM+×é¼þ
+
+finally Í¨³£Óë try-catch ¿éÒ»ÆðÊ¹ÓÃ£¬¼´Ê¹ try-catch ¿éÒý·¢ÁËÒì³££¬finally ¿éÖÐµÄ´úÂëÒ²»á±»Ö´ÐÐ£¬ÓÃÓÚÊÍ·Å try ¿éÖÐ´´½¨µÄ×ÊÔ´¡£
+finalize() ÊÇ Object ÀàµÄÒ»¸öÌØÊâ·½·¨£¬µ±¶ÔÏóÕýÔÚ±»À¬»ø»ØÊÕÊ±£¬À¬»øÊÕ¼¯Æ÷½«»áµ÷ÓÃ¸Ã·½·¨¡£¿ÉÒÔÖØÐ´¸Ã·½·¨ÓÃÓÚÊÍ·ÅÏµÍ³×ÊÔ´¡£
+static ¿éÊÇÓÉ Java ClassLoader ½«Àà¼ÓÔØµ½ÄÚ´æÖÐÊ±Ö´ÐÐµÄ´úÂë¿é¡£Í¨³£ÓÃÓÚ³õÊ¼»¯ÀàµÄ¾²Ì¬±äÁ¿»òÕß´´½¨¾²Ì¬×ÊÔ´¡£
+
 
