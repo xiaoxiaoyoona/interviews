@@ -128,7 +128,87 @@ SQL的优化及进阶
 	9.尽量避免使用否定形式
 		会导致全表扫描
 	10.进行默认的类型转换
+	11.减少中间表
+	12.需要对多个字段使用 IN 谓词时，将它们汇总到一处
+	13.使用延迟查询优化 limit [offset], [rows]
+	14.利用 LIMIT 1 取得唯一行
+	15.注意组合索引，要符合最左匹配原则才能生效
+	16.使用 LIKE 谓词时，只有前方一致的匹配才能用到索引（最左匹配原则）
+		SELECT * FROM SomeTable WHERE col_1 LIKE 'a%';
+	17.尽量使用自增 id 作为主键
+		主键选择的几个原则：自增，尽量小，不要对主键进行修改
+	18.在无 WHERE 条件下要计算表的行数，优先使用 count(*)
+		按照效率排序的话，count(字段)<count(主键 id)<count(1)≈count(*)，count(*) 会选用性能最好的索引来进行排序
+	19.避免使用 SELECT * ，尽量利用覆盖索引来优化性能
+	20.如有必要，使用 force index() 强制走某个索引
+	21.使用 EXPLAIN 来查看 SQL 执行计划
+		执行 「EXPLAIN + SQL 语句」可以发现 key 为 None ,说明确实没有命中索引
+	22.批量插入，速度更快
+		主要原因是合并后日志量 MySQL 的 binlog 和 innodb 的事务让日志减少了，降低日志刷盘的数据量和频率，从而提高了效率
+	
+泛型
+     1.泛型类
+	public class Generic<T>{
+		。。。
+	}
+	实例化泛型类：Generic<Integer> genericInteger = new Generic<Integer>(123456); 
+     2.泛型接口
+	public interface Generator<T>{
+		。。。
+	}
+	实现泛型接口
+	class GeneratorImpl<T> implements Generator<T>{
+		。。。
+	}
+	实现泛型接口：class GeneratorImpl<T> implements Generator<String>{}
+     3.泛型方法
+	public static < E > void printArray( E[] inputArray ){}
+常用的通配符：T,E,K,V,?
+	? 表示不确定的java类型
+	T 表示具体的一个java类型
+	E 代表Element
+	K,V 代表java键值中的key,value
+
+==的作用比较的是两个对象的地址是不是相等，（基本数据类型==比较的是值；引用数据类型==比较的是内存地址）
+	java只有值传递，==的本质比较的就是值，只是引用数据类型存的值是对象的地址
+
+为什么重写equals时必须重写hashCode方法
+	当对象加入HashSet时会先计算hashCode值来判断对象加入的位置，同时也会与其他已经加入的对象的hashCode进行比较，如果没有相符合
+	的hashCode，会假设这个对象没有出现；如果出现相同的hashCode就会调用equals()方法检查hashcode相等的对象是否真的相同。如果两者
+	相同，就不会让其加入，不同的话就重新计算散列到其他位置
+	HashCode相同，equals不一定相同；equals相同，HashCode一定相同，因此 equals方法被覆盖过，HashCode方法也必须被覆盖。
+
+装箱：将基本类型用他们的引用类型包装起来
+拆箱：将包装类型转换成基本数据类型
+	 Integer i4 = new Integer(40);
+	 Integer i5 = new Integer(40);
+	 Integer i6 = new Integer(0);
+	 System.out.println("i4=i5+i6 " + (i4 == i5 + i6)); //true
+		首先+运算符Integer对象不适用，i5，i6进行拆箱，即i4==40；
+		==同样不适用于Integer对象，i4进行拆箱，所有40==40；
+
+JAVA对对象的采用的不是引用调用，实际上，对象引用是按值传递的
+	一个方法不能修改一个基本数据类型的参数（即数值型或布尔型）
+	一个方法可以改变一个对象参数的状态
+	一个方法不能让对象参数引用一个新的对象
+
+浅拷贝：对基本数据类型进行值传递，对引用数据类型进行引用传递般的拷贝
+深拷贝：对基本数据类型进行值传递，对引用数据类型，创建一个新的对象，并复制其内容
+
+构造方法的作用：完成对类对象的初始化工作。
 		
+接口与抽象类的区别
+	1.接口的方法默认为public，所有的方法在接口中都不能实现；抽象类中可以有非抽象方法
+	2.接口中除了static,final变量，不能有其他变量，而抽象类中则不一定
+	3.一个类可以实现多个接口，但只能实现一个抽象类。
+	4.从设计层面来说，抽象是对类的抽象，是一种模板设计。而接口是对行为的抽象，是一种行为规范。
+
+String StringBuffer StringBuilder的区别
+	String使用final关键字来修饰，String对象是不可变的
+
+
+
+
 
 	
 
